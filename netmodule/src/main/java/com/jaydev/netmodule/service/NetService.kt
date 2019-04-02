@@ -34,38 +34,6 @@ object NetService {
         }
     }
 
-    fun <T> createNetService(netTarget: Class<T>): T {
-        if (NetServiceManager.getInstance().netServiceConfig == null) {
-            throw IllegalAccessError("You must configure NetServiceConfig into NetServiceManager.")
-        }
-
-        val netServiceConfig = NetServiceManager.getInstance().netServiceConfig!!
-
-        val httpClient = OkHttpClient().newBuilder()
-        val builder = Retrofit.Builder()
-            .baseUrl(netServiceConfig.baseURL)
-            .addConverterFactory(GsonConverterFactory.create(netServiceConfig.gSon))
-
-        if (netServiceConfig.isNetDebugMode) {
-            val loggingInterceptor = HttpLoggingInterceptor(PrettyPrintLogger())
-            loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-
-            httpClient.addInterceptor(loggingInterceptor)
-
-        }
-
-        httpClient.connectionPool(
-            ConnectionPool(netServiceConfig.connectionPoolSize, netServiceConfig.timeOutSec, TimeUnit.SECONDS)
-        )
-        httpClient.readTimeout(netServiceConfig.timeOutSec, TimeUnit.SECONDS)
-        httpClient.connectTimeout(netServiceConfig.timeOutSec, TimeUnit.SECONDS)
-
-        builder.client(httpClient.build())
-
-        return builder.build().create(netTarget)
-
-    }
-
     fun <T> createNetService(netTarget: Class<T>, vararg interceptor: Interceptor): T {
         if (NetServiceManager.getInstance().netServiceConfig == null) {
             throw IllegalAccessError("You must configuration NetServiceConfig into NetServiceManager.")
