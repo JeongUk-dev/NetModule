@@ -7,7 +7,7 @@ import com.jaydev.netmodule.netInterface.NetFailProcess
 
 class NetServiceConfig(
     val baseURL: String,
-    val gSon: Gson,
+    val gson: Gson,
     val defaultParams: NetConfigDefaultParams?,
     val netFailProcess: NetFailProcess?,
     val netErrorProcess: NetErrorProcess?,

@@ -1,5 +1,5 @@
 package com.jaydev.netmodule.netInterface
 
 interface NetFailProcess {
-	fun onNetErrorBehavior()
+    fun onNetErrorBehavior()
 }
