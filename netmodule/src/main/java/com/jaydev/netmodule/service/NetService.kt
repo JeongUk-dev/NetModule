@@ -35,7 +35,7 @@ object NetService {
 		}
 	}
 
-	fun <T> createNetService(netTarget: Class<T>, vararg interceptor: Interceptor, authenticator: Authenticator? = null): T {
+	fun <T> createNetService(netTarget: Class<T>, authenticator: Authenticator? = null, vararg interceptor: Interceptor?): T {
 		if (NetServiceManager.getInstance().netServiceConfig == null) {
 			throw IllegalAccessError("You must configuration NetServiceConfig into NetServiceManager.")
 		}

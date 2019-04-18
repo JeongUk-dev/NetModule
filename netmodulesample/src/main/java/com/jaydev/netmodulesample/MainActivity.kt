@@ -9,6 +9,9 @@ import com.jaydev.netmodule.netInterface.NetCallback
 import com.jaydev.netmodule.service.NetResponse
 import com.jaydev.netmodule.service.NetService
 import kotlinx.android.synthetic.main.activity_main.*
+import okhttp3.Authenticator
+import okhttp3.Request
+import java.io.IOException
 
 class MainActivity : AppCompatActivity(), NetCallback<NetResponse<ARTemplate>> {
 
@@ -44,7 +47,12 @@ class MainActivity : AppCompatActivity(), NetCallback<NetResponse<ARTemplate>> {
 
 
         button2.setOnClickListener {
-            val testService = NetService.createNetService(TestService::class.java)
+            val authenticator = Authenticator { route, response ->
+                response.request().newBuilder().build()
+            }
+
+
+            val testService = NetService.createNetService(TestService::class.java, authenticator)
             val testParam = TestParam("1")
             val call = testService.getTemplate(testParam.id)
             NetMgr.request(call, this@MainActivity, testParam)
