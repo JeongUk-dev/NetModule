@@ -43,11 +43,8 @@ class NetCallProcess<T> : Callback<T>, Cloneable {
 			}
 
 			NetServiceManager.getInstance().netServiceConfig?.netErrorProcess?.let {
-				it.onErrorBehavior(
-					call.clone(),
-					NetCallProcess(this.netCallback.clone(), this.netCallParams?.clone())
-				) // 통신 에러일때 재시도 할 것인지에 대한 처리를 넘겨준다.
-			}
+				it.onErrorBehavior(call.clone(), NetCallProcess(this.netCallback.clone(), this.netCallParams?.clone()))
+			} // 통신 에러일때 재시도 할 것인지에 대한 처리를 넘겨준다.
 		}
 		call.cancel()
 	}
