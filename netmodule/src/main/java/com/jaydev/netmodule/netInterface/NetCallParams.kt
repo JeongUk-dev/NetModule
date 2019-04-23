@@ -5,7 +5,7 @@ package com.jaydev.netmodule.netInterface
  */
 interface NetCallParams<T> : Cloneable {
 
-    fun getParams(): T
+	fun getParams(): T
 
-    public override fun clone(): NetCallParams<T>
+	public override fun clone(): NetCallParams<T>
 }

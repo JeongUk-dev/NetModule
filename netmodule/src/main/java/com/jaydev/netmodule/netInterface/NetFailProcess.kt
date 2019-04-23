@@ -1,5 +1,7 @@
 package com.jaydev.netmodule.netInterface
 
+import retrofit2.Call
+
 interface NetFailProcess {
-    fun onNetErrorBehavior()
+	fun onNetErrorBehavior(call: Call<*>, t: Throwable)
 }
