@@ -3,6 +3,7 @@ package com.jaydev.netmodulesample
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.jaydev.netmodule.mgr.NetMgr
 import com.jaydev.netmodule.model.NetError
 import com.jaydev.netmodule.netInterface.NetCallback
@@ -16,7 +17,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class MainActivity : AppCompatActivity(), NetCallback<NetResponse<ARTemplate>> {
+class MainActivity : AppCompatActivity() {
+	val TAG = MainActivity::class.java.simpleName
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity(), NetCallback<NetResponse<ARTemplate>> {
 				}
 
 				override fun onFailResponse(error: NetError, responseData: NetResponse<User>) {
-
+					Log.w(TAG, "onFailResponse getMyInfo")
 				}
 
 				override fun clone(): NetCallback<NetResponse<User>> {
@@ -64,7 +66,7 @@ class MainActivity : AppCompatActivity(), NetCallback<NetResponse<ARTemplate>> {
 				}
 
 				override fun onFailResponse(error: NetError, responseData: NetResponse<PagingResponse<ArrayList<Task>>>) {
-
+					Log.w(TAG, "onFailResponse getMyTask")
 				}
 
 				override fun clone(): NetCallback<NetResponse<PagingResponse<ArrayList<Task>>>> {
@@ -96,22 +98,5 @@ class MainActivity : AppCompatActivity(), NetCallback<NetResponse<ARTemplate>> {
 		val df = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.000Z", locale)
 		df.timeZone = TimeZone.getTimeZone("UTC")
 		return df.format(c)
-	}
-
-	override fun onSuccResponse(responseData: NetResponse<ARTemplate>) {
-		val templateModel = responseData.receiveData as ARTemplate
-		textView.text = templateModel.toString()
-
-		val dialog = AlertDialog.Builder(this@MainActivity).setMessage(templateModel.getARItemList().toString())
-			.setPositiveButton("OK", null).create()
-		dialog.show()
-	}
-
-	override fun onFailResponse(error: NetError, responseData: NetResponse<ARTemplate>) {
-		textView.text = responseData.receiveData.toString()
-	}
-
-	override fun clone(): NetCallback<NetResponse<ARTemplate>> {
-		return this
 	}
 }

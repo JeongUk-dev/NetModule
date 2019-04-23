@@ -54,6 +54,7 @@ class SampleApp : Application() {
 							.headers(headers)
 							.build()
 					} else { // 토근 인증 실패
+
 						return@Authenticator null
 					}
 				} else { // 통신 성공
@@ -66,7 +67,7 @@ class SampleApp : Application() {
 					return when (error.code) {
 						400 -> {
 							Toast.makeText(applicationContext, error.message, Toast.LENGTH_SHORT).show()
-							false
+							true
 						}
 						else -> {
 							true
